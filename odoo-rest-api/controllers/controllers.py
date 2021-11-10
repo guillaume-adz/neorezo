@@ -29,9 +29,9 @@ class OdooAPI(http.Controller):
             result = http.dispatch_rpc("object", method, params)
             model = params[3]
             rec = request.env[model].browse(result)
-            serializer = Serializer(rec, "{*}", many=True)
+            serializer = Serializer(rec, "{name}", many=True)
             data = serializer.data
-            return dumps((params,), methodresponse=1, allow_none=False)
+            return dumps(({"params":params, "res":data},), methodresponse=1, allow_none=False)
         except Exception as error:
             response = wsgi_server.xmlrpc_handle_exception_int(error)
         return Response(response=response, mimetype='text/xml')
