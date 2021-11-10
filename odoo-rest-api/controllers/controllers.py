@@ -20,14 +20,14 @@ _logger = logging.getLogger(__name__)
 
 class OdooAPI(http.Controller):
 
-    @http.route("/neorezo/2/<service>", auth="none", methods=["POST"], csrf=False, save_session=False)
+    @http.route("/neorezo", auth="none", methods=["POST"], csrf=False, save_session=False)
     def xmlrpc_2(self, service):
         """XML-RPC service that returns faultCode as int."""
         try:
             data = request.httprequest.get_data()
             params, method = loads(data)
-            result = http.dispatch_rpc(service, method, params)
-            return dumps((result,), methodresponse=1, allow_none=False)
+            # result = http.dispatch_rpc("object", method, params)
+            return dumps({"params": params, "metho": method}, methodresponse=1, allow_none=False)
         except Exception as error:
             response = wsgi_server.xmlrpc_handle_exception_int(error)
         return Response(response=response, mimetype='text/xml')
