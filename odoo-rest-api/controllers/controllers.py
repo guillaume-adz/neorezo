@@ -30,7 +30,7 @@ class OdooAPI(http.Controller):
             # rec = request.env[model].browse(rec_id).ensure_one()
             # serializer = Serializer(result, "{*}", many=True)
             # data = serializer.data
-            return dumps((result,), methodresponse=1, allow_none=False)
+            return dumps((params,), methodresponse=1, allow_none=False)
         except Exception as error:
             response = wsgi_server.xmlrpc_handle_exception_int(error)
         return Response(response=response, mimetype='text/xml')
