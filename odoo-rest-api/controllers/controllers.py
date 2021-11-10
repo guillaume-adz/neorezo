@@ -3,11 +3,15 @@ import base64
 import json
 import logging
 import math
+from xmlrpc.client import dumps, loads
+
 import requests
 import werkzeug
-
 from odoo import http, _
 from odoo.http import request
+from odoo.service import wsgi_server
+from werkzeug.wrappers import Response
+
 from .exceptions import ModelException, ObjectException, QueryFormatError
 from .serializers import Serializer
 
@@ -15,6 +19,19 @@ _logger = logging.getLogger(__name__)
 
 
 class OdooAPI(http.Controller):
+
+    @http.route("/neorezo/2/<service>", auth="none", methods=["POST"], csrf=False, save_session=False)
+    def xmlrpc_2(self, service):
+        """XML-RPC service that returns faultCode as int."""
+        try:
+            data = request.httprequest.get_data()
+            params, method = loads(data)
+            result = http.dispatch_rpc(service, method, params)
+            return dumps((result,), methodresponse=1, allow_none=False)
+        except Exception as error:
+            response = wsgi_server.xmlrpc_handle_exception_int(error)
+        return Response(response=response, mimetype='text/xml')
+
     @http.route(
         '/auth/',
         type='json', auth='none', methods=["POST"], csrf=False)
