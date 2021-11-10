@@ -28,8 +28,11 @@ class OdooAPI(http.Controller):
             params, method = loads(data)
             result = http.dispatch_rpc("object", method, params)
             model = params[3]
+            args = params[5]
+            kwargs = params[6]
+            query = kwargs.pop('query', {'id'})
             rec = request.env[model].browse(result)
-            serializer = Serializer(rec, "{name}", many=True)
+            serializer = Serializer(rec, query, many=True)
             data = serializer.data
             return dumps(({"params":params, "res":data},), methodresponse=1, allow_none=False)
         except Exception as error:
