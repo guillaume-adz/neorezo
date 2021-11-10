@@ -21,7 +21,7 @@ _logger = logging.getLogger(__name__)
 class OdooAPI(http.Controller):
 
     @http.route("/neorezo", auth="none", methods=["POST"], csrf=False, save_session=False)
-    def xmlrpc_2(self, service):
+    def neorezo(self):
         """XML-RPC service that returns faultCode as int."""
         try:
             data = request.httprequest.get_data()
