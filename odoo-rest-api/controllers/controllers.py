@@ -26,8 +26,8 @@ class OdooAPI(http.Controller):
         try:
             data = request.httprequest.get_data()
             params, method = loads(data)
-            # result = http.dispatch_rpc("object", method, params)
-            return dumps(({"params": params, "metho": method},), methodresponse=1, allow_none=False)
+            result = http.dispatch_rpc("object", method, params)
+            return dumps((result,), methodresponse=1, allow_none=False)
         except Exception as error:
             response = wsgi_server.xmlrpc_handle_exception_int(error)
         return Response(response=response, mimetype='text/xml')
