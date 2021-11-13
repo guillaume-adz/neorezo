@@ -22,18 +22,18 @@ class CwsAPI(http.Controller):
         """ db, uid, passwd = params[0], int(params[1]), params[2]
         """
         data = request.httprequest.get_data()
-        params, method = loads(data)
+        params, _ = loads(data)
 
         model, method, args, kwargs = params[3:6]
         query = kwargs.pop('query', {'id'})
-        return model, method, params, query, args, kwargs
+        return model, params, query, args, kwargs
 
     @http.route("/cws_gql", auth='none', methods=["POST"], csrf=False, save_session=False)
     def cws_gql(self):
         """Entry to retrieve data with GraphQL syntax."""
         try:
-            model, method, params, query, args, kwargs = self._loads()
-            result = http.dispatch_rpc("object", method, params)
+            model, params, query, args, kwargs = self._loads()
+            result = http.dispatch_rpc("object", "search", params)
             rec = request.env[model].browse(result)
             serializer = Serializer(rec, query, many=True)
             data = serializer.data
@@ -47,7 +47,7 @@ class CwsAPI(http.Controller):
     @http.route('/cws_pdf/<int:rec_id>', auth='none', methods=["POST"], csrf=False, save_session=False)
     def cws_pdf(self, rec_id, **post):
         try:
-            model, method, params, query, args, kwargs = self._loads()
+            model, params, query, args, kwargs = self._loads()
             obj = self._get_model('ir.actions.report').browse(rec_id).ensure_one()
             res_ids = kwargs.get('res_ids')
             data = kwargs.get('data', '{}')
