@@ -25,7 +25,6 @@ class CwsAPI(http.Controller):
         params, _ = loads(data)
 
         model = params[3]
-        print(params)
         args = params[5]
         kwargs = params[6]
         query = kwargs.pop('query', {'id'})
