@@ -25,6 +25,7 @@ class CwsAPI(http.Controller):
         params, _ = loads(data)
 
         model = params[3]
+        print(params)
         args = params[5]
         kwargs = params[6]
         query = kwargs.pop('query', {'id'})
@@ -35,7 +36,7 @@ class CwsAPI(http.Controller):
         """Entry to retrieve data with GraphQL syntax."""
         try:
             model, params, query, args, kwargs = self._loads()
-            result = http.dispatch_rpc("object", "search", params)
+            result = http.dispatch_rpc('object', 'execute_kw', params)
             rec = request.env[model].browse(result)
             serializer = Serializer(rec, query, many=True)
             data = serializer.data
