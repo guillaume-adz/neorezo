@@ -30,7 +30,7 @@ class CwsAPI(http.Controller):
         query = kwargs.pop('query', {'id'})
         return model, params, query, args, kwargs
 
-    @http.route("/cws_gql", auth='api_key', methods=["POST"], csrf=False, save_session=False)
+    @http.route("/cws_gql", auth='api_key', type='http', methods=["POST"], csrf=False, save_session=False)
     def cws_gql(self):
         """Entry to retrieve data with GraphQL syntax."""
         try:
@@ -46,7 +46,7 @@ class CwsAPI(http.Controller):
             response = wsgi_server.xmlrpc_handle_exception_int(error)
         return Response(response=response, mimetype='text/xml')
 
-    @http.route('/cws_pdf/<int:rec_id>', auth='api_key', methods=["POST"], csrf=False, save_session=False)
+    @http.route('/cws_pdf/<int:rec_id>', auth='api_key', type='http', methods=["POST"], csrf=False, save_session=False)
     def cws_pdf(self, rec_id, **post):
         try:
             model, params, query, args, kwargs = self._loads()
