@@ -1,8 +1,14 @@
+"""
+Code from Y...
+'website': "https://github.com/yezyilomo/odoo-rest-api",
+"""
 import re
 
 from pypeg2 import List, contiguous, csl, name, optional, parse
 
-from .exceptions import QueryFormatError
+
+class QueryFormatError(Exception):
+    """Invalid Query Format."""
 
 
 class IncludedField(List):
@@ -62,6 +68,7 @@ class ParentField(List):
     self[0]  returns IncludedField instance,
     self[1]  returns Block instance
     """
+
     @property
     def name(self):
         return self[0].name
@@ -168,4 +175,3 @@ class Parser(object):
         parent_field_name = str(parent_field.name)
         parent_field_value = self._transform_block(parent_field.block)
         return {parent_field_name: parent_field_value}
-        
