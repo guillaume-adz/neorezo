@@ -1,2 +1,3 @@
 graphql-server-core
-graphene
+graphene<3.0
+
