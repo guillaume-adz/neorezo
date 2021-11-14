@@ -8,5 +8,5 @@
     "depends": ["graphql_base"],
     "external_dependencies": {"python": ["graphene"]},
     "development_status": "Beta",
-    "installable": False,
+    "installable": True,
 }
