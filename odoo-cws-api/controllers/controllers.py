@@ -30,7 +30,7 @@ class CwsAPI(http.Controller):
         query = kwargs.pop('query', {'id'})
         return model, params, query, args, kwargs
 
-    @http.route("/cws_gql", auth='api-key', methods=["POST"], csrf=False, save_session=False)
+    @http.route("/cws_gql", auth='api_key', methods=["POST"], csrf=False, save_session=False)
     def cws_gql(self):
         """Entry to retrieve data with GraphQL syntax."""
         try:

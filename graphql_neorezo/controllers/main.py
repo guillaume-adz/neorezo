@@ -24,6 +24,6 @@ class NeoRezoController(http.Controller, GraphQLControllerMixin):
     # The graphql route, for applications.
     # Note csrf=False: you may want to apply extra security
     # (such as origin restrictions) to this route.
-    @http.route("/graphql/neorezo", auth="user", csrf=False, save_session=False)
+    @http.route("/graphql/neorezo", auth="api_key", csrf=False, save_session=False)
     def graphql(self, **kwargs):
         return self._handle_graphql_request(schema)
