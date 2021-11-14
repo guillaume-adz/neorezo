@@ -4,7 +4,6 @@
 {
     "name": "GraphQL NeoRezo",
     "version": "0.1",
-    "license": "MIT",
     "author": "Guillaume DOUMENC",
     "depends": ["graphql_base"],
     "external_dependencies": {"python": ["graphene"]},
