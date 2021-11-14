@@ -14,5 +14,5 @@
     "external_dependencies": {"python": ["graphene", "graphql-server-core"]},
     "development_status": "Beta",
     "maintainers": ["sbidoul"],
-    "installable": False,
+    "installable": True,
 }
