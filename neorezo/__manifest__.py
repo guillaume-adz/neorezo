@@ -6,5 +6,6 @@
     "data": ["views/tenant.xml"],
     "external_dependencies": {"python": ["graphene"]},
     "development_status": "Beta",
+    "application": True,
     "installable": True,
 }

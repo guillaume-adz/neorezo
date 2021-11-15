@@ -12,7 +12,7 @@
             <field name="arch" type="xml">
                 <xpath expr="//notebook" position="inside">
                     <page string="Tenant">
-                        <field name="account_tax_unit_ids"/>
+                        <field name="tenant_prefix"/>
                     </page>
                 </xpath>
             </field>
