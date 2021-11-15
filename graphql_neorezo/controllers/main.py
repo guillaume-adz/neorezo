@@ -11,7 +11,7 @@ from ..schema import schema
 class NeoRezoController(http.Controller, GraphQLControllerMixin):
 
     # The GraphiQL route, providing an IDE for developers
-    @http.route("/graphiql/neorezo", auth="user")
+    @http.route("/graphiql/neorezo", auth="api_key")
     def graphiql(self, **kwargs):
         return self._handle_graphiql_request(schema)
 
@@ -24,6 +24,6 @@ class NeoRezoController(http.Controller, GraphQLControllerMixin):
     # The graphql route, for applications.
     # Note csrf=False: you may want to apply extra security
     # (such as origin restrictions) to this route.
-    @http.route("/graphql/neorezo", auth="api_key", csrf=False, save_session=False)
+    @http.route("/graphql/neorezo", auth="api_key", csrf=False, type='http')
     def graphql(self, **kwargs):
         return self._handle_graphql_request(schema)
