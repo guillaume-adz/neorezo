@@ -1,7 +1,7 @@
 from odoo import models, fields
 
 
-class ProductTemplate(models.Model):
+class Tenant(models.Model):
     _name = 'res.company'
     _inherit = ['res.company']
 

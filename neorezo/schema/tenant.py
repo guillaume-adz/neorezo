@@ -15,6 +15,7 @@ from odoo.addons.graphql_base import OdooObjectType
 
 class Tenant(OdooObjectType):
     name = graphene.String(required=True)
+    tenant_prefix = graphene.String(required=True)
 
 
 class TenantMixin:
