@@ -7,15 +7,32 @@
 
 import graphene
 
-from odoo import _
-from odoo.exceptions import UserError
-
 from odoo.addons.graphql_base import OdooObjectType
+
+
+class Invoice(OdooObjectType):
+    name = graphene.String(required=True)
 
 
 class Tenant(OdooObjectType):
     name = graphene.String(required=True)
     tenant_prefix = graphene.String(required=True)
+    invoices = graphene.List(
+        graphene.NonNull(Invoice),
+        required=True,
+        refund_only=graphene.Boolean(),
+        limit=graphene.Int(),
+        offset=graphene.Int(),
+    )
+
+    @staticmethod
+    def resolve_invoices(root, info, refund_only= False, limit=None, offset=None):
+        domain = [("name", "=like", 'CDF%')]
+        # if refund_only:
+        #     domain.append(("type_name", "=", True))
+        return info.context["env"]["account.move"].search(
+            domain, limit=limit, offset=offset
+        )
 
 
 class TenantMixin:
@@ -32,4 +49,3 @@ class TenantMixin:
         return info.context["env"]["res.company"].search(
             domain, limit=limit, offset=offset
         )
-
