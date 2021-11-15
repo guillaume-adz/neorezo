@@ -37,5 +37,35 @@ class NeoRezoController(http.Controller, GraphQLControllerMixin):
         _logger.info(content_type)
         _logger.info(req.data)
         _logger.info(req.data.decode("utf8"))
+        data = req.data.decode("utf8")
+
+        from graphql_server import (
+            HttpQueryError,
+            default_format_error,
+            encode_execution_results,
+            json_encode,
+            load_json_body,
+            run_http_query,
+        )
+        from functools import partial
+
+        try:
+            execution_results, all_params = run_http_query(
+                schema,
+                req.method.lower(),
+                data,
+                query_data=req.args,
+                batch_enabled=False,
+                catch=False,
+                context={"env": http.request.env},
+            )
+            result, status_code = encode_execution_results(
+                execution_results,
+                is_batch=isinstance(data, list),
+                format_error=default_format_error,
+                encode=partial(json_encode, pretty=False),
+            )
+        except Exception as e:
+            _logger.info(str(e))
 
         return self._handle_graphql_request(schema)
