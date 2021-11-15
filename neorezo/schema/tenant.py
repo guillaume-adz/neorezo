@@ -27,7 +27,7 @@ class Tenant(OdooObjectType):
 
     @staticmethod
     def resolve_invoices(root, info, refund_only= False, limit=None, offset=None):
-        domain = [("ref", "=like", 'CDF%')]
+        domain = [("company_id", "=", root.id) , ("ref", "=like", 'CDF%')]
         # if refund_only:
         #     domain.append(("type_name", "=", True))
         return info.context["env"]["account.move"].search(
