@@ -1,11 +1,15 @@
 # Copyright 2018 ACSONE SA/NV
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
+import logging
 
 from odoo import http
 
 from odoo.addons.graphql_base import GraphQLControllerMixin
 
 from ..schema import schema
+
+
+_logger = logging.getLogger(__name__)
 
 
 class NeoRezoController(http.Controller, GraphQLControllerMixin):
@@ -26,4 +30,12 @@ class NeoRezoController(http.Controller, GraphQLControllerMixin):
     # (such as origin restrictions) to this route.
     @http.route("/graphql/neorezo", auth="apikey", csrf=False)
     def graphql(self, **kwargs):
+        req = http.request.httprequest
+        # We use mimetype here since we don't need the other
+        # information provided by content_type
+        content_type = req.mimetype
+        _logger.info(content_type)
+        _logger.info(req.data)
+        _logger.info(req.data.decode("utf8"))
+
         return self._handle_graphql_request(schema)
