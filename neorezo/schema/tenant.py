@@ -12,6 +12,7 @@ from odoo.addons.graphql_base import OdooObjectType
 
 class Invoice(OdooObjectType):
     name = graphene.String(required=True)
+    move_type = graphene.Boolean(required=True),
 
 
 class Tenant(OdooObjectType):
