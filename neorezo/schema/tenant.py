@@ -13,7 +13,7 @@ from odoo.addons.graphql_base import OdooObjectType
 class Invoice(OdooObjectType):
     name = graphene.String(required=True)
     move_type = graphene.Boolean(required=True)
-    tax_totals_json = graphene.JSONString(required=True)
+    tax_totals_json = graphene.String(required=True)
     amount_total_signed = graphene.Float()
 
 
