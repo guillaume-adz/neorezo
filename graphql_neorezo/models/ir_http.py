@@ -17,7 +17,8 @@ class IrHttp(models.AbstractModel):
     _inherit = "ir.http"
 
     @classmethod
-    def _auth_method_api_key(cls):
+    def _auth_method_apikey(cls):
+        _logger.debug("Check from apikey")
         api_key = request.httprequest.headers.get('Authorization')
         if not api_key:
             raise BadRequest('Access token missing')
@@ -32,4 +33,5 @@ class IrHttp(models.AbstractModel):
         # take the identity of the API key user
         request.uid = user_id
         request.auth_api_key = api_key
+        _logger.debug(f"Checked from apikey: {user_id}")
         return user_id
