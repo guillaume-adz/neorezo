@@ -7,7 +7,7 @@ from graphene.test import Client
 
 from odoo.tests import TransactionCase
 
-from ..schema import schema
+from graphql_neorezo.schema.schema import schema
 
 
 class TestGraphene(TransactionCase):

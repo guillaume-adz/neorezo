@@ -98,4 +98,3 @@ class Mutation(graphene.ObjectType):
     create_partner = CreatePartner.Field(description="Documentation of CreatePartner")
 
 
-schema = graphene.Schema(query=Query, mutation=Mutation)

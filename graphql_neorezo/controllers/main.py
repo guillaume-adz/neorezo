@@ -5,7 +5,7 @@ import logging
 from odoo import http
 from odoo.addons.graphql_base import GraphQLControllerMixin
 
-from ..schema import schema
+from graphql_neorezo.schema import schema
 
 _logger = logging.getLogger(__name__)
 
