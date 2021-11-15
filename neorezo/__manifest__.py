@@ -2,7 +2,7 @@
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
 {
-    "name": "GraphQL NeoRezo",
+    "name": "NeoRezo",
     "version": "0.1",
     "author": "Guillaume DOUMENC",
     "depends": ["graphql_base"],
