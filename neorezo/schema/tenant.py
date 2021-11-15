@@ -12,7 +12,9 @@ from odoo.addons.graphql_base import OdooObjectType
 
 class Invoice(OdooObjectType):
     name = graphene.String(required=True)
-    move_type = graphene.Boolean(required=True),
+    move_type = graphene.Boolean(required=True)
+    tax_totals_json = graphene.JSONString(required=True)
+    amount_total_signed = graphene.Float()
 
 
 class Tenant(OdooObjectType):
@@ -27,8 +29,8 @@ class Tenant(OdooObjectType):
     )
 
     @staticmethod
-    def resolve_invoices(root, info, refund_only= False, limit=None, offset=None):
-        domain = [("company_id", "=", root.id) , ("ref", "=like", 'CDF%')]
+    def resolve_invoices(root, info, refund_only=False, limit=None, offset=None):
+        domain = [("company_id", "=", root.id), ("ref", "=like", 'CDF%')]
         # if refund_only:
         #     domain.append(("type_name", "=", True))
         return info.context["env"]["account.move"].search(
@@ -44,9 +46,19 @@ class TenantMixin:
         offset=graphene.Int(),
     )
 
+    invoices = graphene.List(
+        graphene.NonNull(Invoice),
+        required=True,
+        limit=graphene.Int(),
+        offset=graphene.Int(),
+    )
+
     @staticmethod
-    def resolve_tenants(root, info, limit=None, offset=None):
+    def resolve_tenants(root, info, **kwargs):
         domain = []
-        return info.context["env"]["res.company"].search(
-            domain, limit=limit, offset=offset
-        )
+        return info.context["env"]["res.company"].search(domain, **kwargs)
+
+    @staticmethod
+    def resolve_invoices(root, info, **kwargs):
+        domain = []
+        return info.context["env"]["account.move"].search(domain, **kwargs)
