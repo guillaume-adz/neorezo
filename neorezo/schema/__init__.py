@@ -1,6 +1,6 @@
 import graphene
 
-from .invoice import InvoiceMixin
+# from .invoice import InvoiceMixin
 from .tenant import TenantMixin
 
 
