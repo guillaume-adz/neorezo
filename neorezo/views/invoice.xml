@@ -4,7 +4,7 @@
 
         <!-- form -->
 
-        <record id="neorezo.company_form" model="ir.ui.view">
+        <record id="neorezo.invoice" model="ir.ui.view">
             <field name="name">NeoRezo Invoice form</field>
             <field name="model">account.move</field>
             <field name="inherit_id" ref="account.view_move_form"/>
