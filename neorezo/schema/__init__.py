@@ -9,4 +9,4 @@ class Query(ObjectType, TenantMixin):
     ...
 
 
-schema = Schema(query=Query, auto_camelcase=False, )
+schema = Schema(query=Query)
