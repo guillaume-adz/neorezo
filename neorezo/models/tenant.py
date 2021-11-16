@@ -5,4 +5,4 @@ class Tenant(models.Model):
     _name = 'res.company'
     _inherit = ['res.company']
 
-    tenant_prefix = fields.Char(string='Prefix des commandes')
+    tenant_prefix = fields.Char(string="Référence du tenant")
