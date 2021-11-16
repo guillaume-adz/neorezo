@@ -1,27 +1,13 @@
-# Copyright 2018 ACSONE SA/NV
-# License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
-
-# disable undefined variable error, which erroneously triggers
-# on forward declarations of classes in lambdas
-# pylint: disable=E0602
-
 import graphene
 
 from odoo.addons.graphql_base import OdooObjectType
-
-
-class Invoice(OdooObjectType):
-    name = graphene.String(required=True)
-    move_type = graphene.Boolean(required=True)
-    tax_totals_json = graphene.String(required=True)
-    amount_total_signed = graphene.Float()
 
 
 class Tenant(OdooObjectType):
     name = graphene.String(required=True)
     tenant_prefix = graphene.String(required=True)
     invoices = graphene.List(
-        graphene.NonNull(Invoice),
+        graphene.NonNull('Invoice'),
         required=True,
         refund_only=graphene.Boolean(),
         limit=graphene.Int(),
@@ -41,13 +27,6 @@ class Tenant(OdooObjectType):
 class TenantMixin:
     tenants = graphene.List(
         graphene.NonNull(Tenant),
-        required=True,
-        limit=graphene.Int(),
-        offset=graphene.Int(),
-    )
-
-    invoices = graphene.List(
-        graphene.NonNull(Invoice),
         required=True,
         limit=graphene.Int(),
         offset=graphene.Int(),

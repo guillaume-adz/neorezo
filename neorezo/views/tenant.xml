@@ -11,7 +11,7 @@
             <field name="priority">100</field>
             <field name="arch" type="xml">
                 <xpath expr="//notebook" position="inside">
-                    <page string="Tenant NeoRezo">
+                    <page string="NeoRezo">
                         <group>
                             <group>
                                 <field name="tenant_prefix"/>

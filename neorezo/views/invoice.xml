@@ -4,22 +4,27 @@
 
         <!-- form -->
 
-        <record id="neorezo.invoice" model="ir.ui.view">
+        <record id="neorezo.invoice_form" model="ir.ui.view">
             <field name="name">NeoRezo Invoice form</field>
             <field name="model">account.move</field>
             <field name="inherit_id" ref="account.view_move_form"/>
             <field name="priority">100</field>
             <field name="arch" type="xml">
                 <xpath expr="//notebook" position="inside">
-                    <page string="Tenant NeoRezo">
+                    <page string="NeoRezo">
                         <group>
                             <group>
                                 <field name="billing_first_name"/>
                                 <field name="billing_last_name"/>
+                                <field name="billing_company"/>
+                                <field name="billing_phone"/>
+                                <field name="billing_email"/>
                             </group>
                             <group>
                                 <field name="billing_address1"/>
                                 <field name="billing_address2"/>
+                                <field name="billing_zip"/>
+                                <field name="billing_country"/>
                             </group>
                         </group>
                     </page>
