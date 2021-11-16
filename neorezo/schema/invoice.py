@@ -1,6 +1,5 @@
 from graphene import Boolean
 from graphene import Float
-from graphene import NonNull
 from graphene import String
 from odoo.addons.graphql_base import OdooObjectType
 
@@ -36,8 +35,4 @@ class Invoice(OdooObjectType):
 
 class InvoiceMixin:
     invoices = OdooList(Invoice, "account.move")
-    invoice = OdooRecord(invoices)
-
-    @staticmethod
-    def resolve_invoice(root, info, id, **kwargs):
-        root.invoices.resolve_id(info, id)
+    # invoice = OdooRecord(invoices)
