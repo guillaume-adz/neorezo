@@ -10,7 +10,7 @@ from odoo.addons.graphql_base import OdooObjectType
 _logger = logging.getLogger(__name__)
 
 
-def default_list_resolver(parent, info, domain=None, **kwargs):
+def default_list_resolver(_, parent, info, domain=None, **kwargs):
     domain = domain or [[]]
     return info.context["env"][parent.meta.odoo_model].search(domain, **kwargs)
 
@@ -24,7 +24,7 @@ class OdooList(List):
                          limit=Int(), offset=Int(), **kwargs)
 
 
-def record_resolver(parent, info, id, **kwargs):
+def record_resolver(_, parent, info, id, **kwargs):
     _logger.info(parent)
     _logger.info(info)
     _logger.info(id)
