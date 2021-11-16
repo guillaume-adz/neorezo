@@ -1,11 +1,12 @@
-import graphene
+from graphene import ObjectType
+from graphene import Schema
 
 # from .invoice import InvoiceMixin
 from .tenant import TenantMixin
 
 
-class Query(graphene.ObjectType, TenantMixin):
+class Query(ObjectType, TenantMixin):
     ...
 
 
-schema = graphene.Schema(query=Query, auto_camelcase=False, )
+schema = Schema(query=Query, auto_camelcase=False, )
