@@ -10,6 +10,7 @@ from .scalar import OdooRecord
 class Invoice(OdooObjectType):
     class Meta:
         description = "Invoice defined in ODOO from NeoRezo."
+        odoo_model = "account.move"
 
     name = String(required=True)
     move_type = Boolean(required=True)
@@ -34,5 +35,5 @@ class Invoice(OdooObjectType):
 
 
 class InvoiceMixin:
-    invoices = OdooList(Invoice, "account.move")
-    invoice = OdooRecord(invoices)
+    invoices = OdooList(Invoice)
+    invoice = OdooRecord(Invoice)
