@@ -10,7 +10,8 @@ class OdooList(List):
     """A graphene List with an Odoo aware default resolver."""
 
     def __init__(self, of_type: OdooObjectType, odoo_model: str, **kwargs):
-        super().__init__(NonNull(of_type), resolver=self.default_resolver, limit=Int(), offset=Int(), **kwargs)
+        super().__init__(NonNull(of_type), required=True, resolver=self.default_resolver,
+                         limit=Int(), offset=Int(), **kwargs)
         self.odoo_model = odoo_model
 
     @property
