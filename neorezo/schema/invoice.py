@@ -36,7 +36,7 @@ class Invoice(OdooObjectType):
 
 class InvoiceMixin:
     invoices = OdooList("account.move", NonNull(Invoice))
-    invoice = OdooRecord(Invoice)
+    invoice = OdooRecord(invoices)
 
     @staticmethod
     def resolve_invoice(root, info, id, **kwargs):
