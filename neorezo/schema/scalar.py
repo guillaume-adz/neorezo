@@ -33,5 +33,5 @@ class OdooRecord(Field):
     """A graphene Field with an Odoo aware default resolver."""
 
     def __init__(self, list: OdooList, **kwargs):
-        super().__init__(list.of_type, resolver=self.default_field_resolver, id=String(required=True))
+        super().__init__(list.of_type, resolver=default_field_resolver, id=String(required=True))
         self.list = list
