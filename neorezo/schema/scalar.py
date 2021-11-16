@@ -18,6 +18,7 @@ class OdooList(List):
     def of_type(self):
         return self._of_type
 
+    @staticmethod
     def default_resolver(self, info, **kwargs):
         domain = [[]]
         return info.context["env"][self.odoo_model].search(domain, **kwargs)
@@ -30,6 +31,7 @@ class OdooRecord(Field):
         super().__init__(list.of_type, resolver=self.default_resolver, id=String(required=True))
         self.list = list
 
+    @staticmethod
     def default_resolver(self, info, id, **kwargs):
         domain = [('id' '=', id)]
         return info.context["env"][self.list.odoo_model].search(domain, **kwargs)
