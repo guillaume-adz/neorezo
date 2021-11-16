@@ -5,6 +5,11 @@ from odoo.addons.graphql_base import OdooObjectType
 
 from .scalar import OdooList
 from .scalar import OdooRecord
+from graphene import Field
+from graphene import Int
+from graphene import List
+from graphene import NonNull
+from graphene import String
 
 
 class Invoice(OdooObjectType):
@@ -34,5 +39,6 @@ class Invoice(OdooObjectType):
 
 
 class InvoiceMixin:
-    invoices = OdooList(Invoice, "account.move")
+    invoices = List(NonNull(Invoice), limit=Int(), offset = Int())
+    # invoices = OdooList(Invoice, "account.move")
     # invoice = OdooRecord(invoices)
