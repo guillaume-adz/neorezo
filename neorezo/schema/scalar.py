@@ -18,7 +18,7 @@ class OdooList(List):
 class OdooRecord(Field):
 
     def __init__(self, list: OdooList, **kwargs):
-        super().__init__(list, resolver=self.resolve, id=String(required=True))
+        super().__init__(list.model, resolver=self.resolve, id=String(required=True))
         self.model = list.model
 
     def resolve(self, info, id, **kwargs):
