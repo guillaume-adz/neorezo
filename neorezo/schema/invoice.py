@@ -1,10 +1,13 @@
 from graphene import Boolean
 from graphene import Float
 from graphene import String
+from graphene import Field
 from odoo.addons.graphql_base import OdooObjectType
 
 from .scalar import OdooList
 from .scalar import OdooRecord
+import logging
+_logger = logging.getLogger(__name__)
 
 
 class Invoice(OdooObjectType):
@@ -33,7 +36,19 @@ class Invoice(OdooObjectType):
     def resolve_customer(parent, info):
         return f"{parent.first_name} {parent.last_name}"
 
+def record_resolver(parent, info, id, **kwargs):
+    _logger.info(parent)
+    _logger.info(info)
+    _logger.info(id)
+    _logger.info(kwargs)
+    domain = [('id' '=', id)]
+    return default_list_resolver(parent, info, domain=domain, **kwargs)
 
 class InvoiceMixin:
     invoices = OdooList(Invoice)
     invoice = OdooRecord(Invoice)
+    inv = Field(Invoiceresolver=record_resolver, id=String(required=True))
+
+    @staticmethod
+    def resolve_invoice(parent, info, id, **kwargs):
+        return f"{parent.first_name} {parent.last_name}"
