@@ -24,18 +24,16 @@ class OdooList(List):
                          limit=Int(), offset=Int(), **kwargs)
 
 
-def record_resolver(parent, info, id, **kwargs):
-    _logger.info(parent)
-    _logger.info(info)
-    _logger.info(id)
-    _logger.info(kwargs)
-    domain = [('id' '=', id)]
-    return default_list_resolver(parent, info, domain=domain, **kwargs)
-
-
 class OdooRecord(Field):
     """A graphene Field with an Odoo aware default resolver."""
 
     def __init__(self, of_type: OdooObjectType, resolver=None, **kwargs):
-        resolver = resolver or record_resolver
-        super().__init__(of_type, resolver=record_resolver, id=String(required=True))
+        super().__init__(of_type, resolver=self.record_resolver, id=String(required=True))
+
+    def record_resolver(parent, info, id, **kwargs):
+        _logger.info(parent)
+        _logger.info(info)
+        _logger.info(id)
+        _logger.info(kwargs)
+        domain = [('id' '=', id)]
+        return default_list_resolver(parent, info, domain=domain, **kwargs)

@@ -40,14 +40,6 @@ def default_list_resolver(parent, info, domain=None, **kwargs):
     domain = domain or [[]]
     return info.context["env"][parent.meta.odoo_model].search(domain, **kwargs)
 
-def record_resolver(parent, info, id, **kwargs):
-    _logger.info(parent)
-    _logger.info(info)
-    _logger.info(id)
-    _logger.info(kwargs)
-    domain = [('id' '=', id)]
-    return default_list_resolver(parent, info, domain=domain, **kwargs)
-
 class InvoiceMixin:
     invoices = OdooList(Invoice)
     invoice = OdooRecord(Invoice)
@@ -56,3 +48,12 @@ class InvoiceMixin:
     @staticmethod
     def resolve_invoice(parent, info, id, **kwargs):
         return f"{parent.first_name} {parent.last_name}"
+
+    def record_resolver(self, info, id, **kwargs):
+        _logger.info(self)
+        _logger.info(info)
+        _logger.info(id)
+        _logger.info(kwargs)
+        domain = [('id' '=', id)]
+        return default_list_resolver(self, info, domain=domain, **kwargs)
+
