@@ -18,7 +18,8 @@ class OdooType(OdooObjectType):
 
     @classmethod
     def __init_subclass_with_meta__(cls, **options):
-        _logger.info(options)
+        _logger.error("TRACEEEEEEEEEEEEEEEEEEEE")
+        _logger.error(options)
         super().__init_subclass_with_meta__(**options)
 
 
