@@ -10,8 +10,14 @@ from odoo.addons.graphql_base import OdooObjectType
 _logger = logging.getLogger(__name__)
 
 
-def odoo_resolver(parent, info, domain=None, **kwargs):
-    return info.context["env"][parent.Meta.odoo_model].search(domain, **kwargs)
+def odoo_resolver(object_type, info, domain=None, **kwargs):
+    return info.context["env"][object_type._meta.odoo_model].search(domain, **kwargs)
+
+
+class OdooType(OdooObjectType):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.meta = self.__class__.Meta()
 
 
 class OdooList(List):
