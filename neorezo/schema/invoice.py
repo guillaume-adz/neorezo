@@ -49,6 +49,7 @@ class InvoiceMixin:
     def resolve_invoice(parent, info, id, **kwargs):
         return f"{parent.first_name} {parent.last_name}"
 
+    @staticmethod
     def resolve_inv(self, info, id, **kwargs):
         _logger.info(self)
         _logger.info(info)
