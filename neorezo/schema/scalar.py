@@ -11,7 +11,7 @@ _logger = logging.getLogger(__name__)
 
 
 def odoo_resolver(parent, info, domain=None, **kwargs):
-    return info.context["env"][parent.meta.odoo_model].search(domain, **kwargs)
+    return info.context["env"][parent.Meta.odoo_model].search(domain, **kwargs)
 
 
 class OdooList(List):
