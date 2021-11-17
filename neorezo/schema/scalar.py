@@ -10,8 +10,7 @@ from odoo.addons.graphql_base import OdooObjectType
 _logger = logging.getLogger(__name__)
 
 
-def default_list_resolver(parent, info, domain=None, **kwargs):
-    domain = domain or [[]]
+def odoo_resolver(parent, info, domain=None, **kwargs):
     return info.context["env"][parent.meta.odoo_model].search(domain, **kwargs)
 
 
@@ -19,20 +18,21 @@ class OdooList(List):
     """A graphene List with an Odoo aware default resolver."""
 
     def __init__(self, of_type: OdooObjectType, resolver=None, **kwargs):
-        resolver = resolver or default_list_resolver
-        super().__init__(NonNull(of_type), required=True, resolver=default_list_resolver,
-                         limit=Int(), offset=Int(), **kwargs)
+        resolver = resolver or self.record_resolver
+        super().__init__(NonNull(of_type), required=True, resolver=resolver, limit=Int(), offset=Int(), **kwargs)
+
+    def record_resolver(self, info, *args, **kwargs):
+        domain = [[]]
+        return odoo_resolver(self._of_type, info, domain=domain, **kwargs)
 
 
 class OdooRecord(Field):
     """A graphene Field with an Odoo aware default resolver."""
 
     def __init__(self, of_type: OdooObjectType, resolver=None, **kwargs):
-        super().__init__(of_type, resolver=self.record_resolver, id=String(required=True))
+        resolver = resolver or self.record_resolver
+        super().__init__(of_type, resolver=resolver, id=String(required=True))
 
-    def record_resolver(parent, *args, **kwargs):
-        _logger.info(parent)
-        _logger.info(args)
-        _logger.info(kwargs)
+    def record_resolver(self, info, id, **kwargs):
         domain = [('id' '=', id)]
-        return default_list_resolver(parent, info, domain=domain, **kwargs)
+        return odoo_resolver(self._type, info, domain=domain, **kwargs)
