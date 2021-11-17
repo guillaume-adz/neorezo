@@ -15,9 +15,11 @@ def odoo_resolver(object_type, info, domain=None, **kwargs):
 
 
 class OdooType(OdooObjectType):
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self.meta = self.__class__.Meta()
+
+    @classmethod
+    def __init_subclass_with_meta__(cls, **options):
+        _logger.info(options)
+        super().__init_subclass_with_meta__(**options)
 
 
 class OdooList(List):
