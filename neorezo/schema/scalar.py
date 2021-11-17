@@ -16,6 +16,12 @@ def odoo_resolver(object_type, info, domain=None, **kwargs):
 
 class OdooType(OdooObjectType):
 
+    def __init__(self, *args, **kwargs):
+        _logger.error("INITTTTTTTTTTTTTTTTTTTTTTTT")
+        _logger.error(args)
+        _logger.error(kwargs)
+        super().__init__( *args, **kwargs)
+
     @classmethod
     def __init_subclass_with_meta__(cls, **options):
         _logger.error("TRACEEEEEEEEEEEEEEEEEEEE")
