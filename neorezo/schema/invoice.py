@@ -43,13 +43,13 @@ def default_list_resolver(parent, info, domain=None, **kwargs):
 class InvoiceMixin:
     invoices = OdooList(Invoice)
     invoice = OdooRecord(Invoice)
-    inv = Field(Invoice, resolver=record_resolver, id=String(required=True))
+    inv = Field(Invoice, id=String(required=True))
 
     @staticmethod
     def resolve_invoice(parent, info, id, **kwargs):
         return f"{parent.first_name} {parent.last_name}"
 
-    def record_resolver(self, info, id, **kwargs):
+    def resolve_inv(self, info, id, **kwargs):
         _logger.info(self)
         _logger.info(info)
         _logger.info(id)
