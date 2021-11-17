@@ -49,6 +49,7 @@ class OdooRecord(Field):
         super().__init__(of_type, resolver=resolver, id=String(required=True))
 
     def record_resolver(self, parent, info, id, **kwargs):
+        _logger.error(self._type.__class__.odoo_model)
         _logger.error(self._type._meta.odoo_model)
         domain = [('id' '=', id)]
         return odoo_resolver(self._type, info, domain=domain, **kwargs)

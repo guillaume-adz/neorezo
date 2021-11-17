@@ -13,9 +13,10 @@ _logger = logging.getLogger(__name__)
 from .scalar import OdooType
 
 class Invoice(OdooObjectType):
+    odoo_model = "account.move"
+
     class Meta:
         description = "Invoice defined in ODOO from NeoRezo."
-        odoo_model = "account.move"
 
     name = String(required=True)
     move_type = Boolean(required=True)
