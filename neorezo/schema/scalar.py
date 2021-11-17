@@ -21,7 +21,9 @@ class OdooList(List):
         resolver = resolver or self.record_resolver
         super().__init__(NonNull(of_type), required=True, resolver=resolver, limit=Int(), offset=Int(), **kwargs)
 
-    def record_resolver(self, info, *args, **kwargs):
+    def record_resolver(self, *args, **kwargs):
+        _logger.info(args)
+        _logger.info(kwargs)
         domain = [[]]
         return odoo_resolver(self._of_type, info, domain=domain, **kwargs)
 
@@ -33,6 +35,8 @@ class OdooRecord(Field):
         resolver = resolver or self.record_resolver
         super().__init__(of_type, resolver=resolver, id=String(required=True))
 
-    def record_resolver(self, info, id, **kwargs):
+    def record_resolver(self, *args, **kwargs):
+        _logger.info(args)
+        _logger.info(kwargs)
         domain = [('id' '=', id)]
         return odoo_resolver(self._type, info, domain=domain, **kwargs)
