@@ -36,6 +36,10 @@ class Invoice(OdooObjectType):
     def resolve_customer(parent, info):
         return f"{parent.first_name} {parent.last_name}"
 
+def default_list_resolver(parent, info, domain=None, **kwargs):
+    domain = domain or [[]]
+    return info.context["env"][parent.meta.odoo_model].search(domain, **kwargs)
+
 def record_resolver(parent, info, id, **kwargs):
     _logger.info(parent)
     _logger.info(info)
@@ -47,7 +51,7 @@ def record_resolver(parent, info, id, **kwargs):
 class InvoiceMixin:
     invoices = OdooList(Invoice)
     invoice = OdooRecord(Invoice)
-    inv = Field(Invoiceresolver=record_resolver, id=String(required=True))
+    inv = Field(Invoice, resolver=record_resolver, id=String(required=True))
 
     @staticmethod
     def resolve_invoice(parent, info, id, **kwargs):
