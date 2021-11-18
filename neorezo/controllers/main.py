@@ -13,7 +13,7 @@ _logger = logging.getLogger(__name__)
 class NeoRezoController(http.Controller, GraphQLControllerMixin):
 
     # The GraphiQL route, providing an IDE for developers
-    @http.route("/graphiql", auth="apikey")
+    @http.route("/graphiql", auth="apikey", csrf=False)
     def graphiql(self, **kwargs):
         try:
             return self._handle_graphiql_request(schema)
@@ -34,5 +34,4 @@ class NeoRezoController(http.Controller, GraphQLControllerMixin):
         try:
             return self._handle_graphql_request(schema)
         except Exception as e:
-            _logger.error("ERRRRRRRRRRRRRRRRRRRRRR")
             _logger.error(str(e))
