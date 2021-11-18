@@ -37,10 +37,10 @@ class OdooType(OdooObjectType):
         _logger.error(meta_options)
         meta = OdooOptions(**meta_options)
         super().__init_subclass_with_meta__(_meta=meta, **meta_options)
-        odoo_model = meta_options.get('odoo_model')
-        if not odoo_model:
-            _logger.error(f"No odoo model defined for {cls._meta.name}")
-        setattr(cls, "odoo_model", odoo_model)
+        # odoo_model = meta_options.get('odoo_model')
+        # if not odoo_model:
+        #     _logger.error(f"No odoo model defined for {cls._meta.name}")
+        # setattr(cls, "odoo_model", odoo_model)
 
 
 class OdooList(List):
