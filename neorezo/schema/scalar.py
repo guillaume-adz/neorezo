@@ -26,18 +26,11 @@ class OdooType(OdooObjectType):
 
     @classmethod
     def __init_subclass_with_meta__(cls, **meta_options):
-        _logger.error("TRACEEEEEEEEEEEEEEEEEEEE")
-        _logger.error(meta_options)
         odoo_model = meta_options.pop('odoo_model', None)
         if not odoo_model:
             _logger.error(f"No odoo model defined for {cls}")
         meta = OdooOptions(cls, odoo_model)
         super().__init_subclass_with_meta__(_meta=meta, **meta_options)
-        _logger.error(cls._meta.odoo_model)
-        # odoo_model = meta_options.get('odoo_model')
-        # if not odoo_model:
-        #     _logger.error(f"No odoo model defined for {cls._meta.name}")
-        # setattr(cls, "odoo_model", odoo_model)
 
     @property
     def odoo_model(self):
@@ -66,5 +59,5 @@ class OdooRecord(Field):
     def record_resolver(self, parent, info, id, **kwargs):
         # _logger.error(self._type._meta.odoo_model)
         _logger.error(self._type.odoo_model)
-        domain = [('id' '=', id)]
+        domain = [('id', '=', id)]
         return odoo_resolver(self._type, info, domain=domain, **kwargs)
