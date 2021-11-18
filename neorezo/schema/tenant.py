@@ -3,6 +3,7 @@ from graphene import Field
 from graphene import ID
 from graphene import Int
 from graphene import List
+from graphene import NonNull
 from graphene import String
 
 from .scalar import OdooList
@@ -18,9 +19,9 @@ class Tenant(OdooType):
     id = ID(required=True)
     name = String(required=True)
     tenant_prefix = String(name="prefix", required=True)
-    # tenant_parent = Field('odoo.addons.neorezo.schema.tenant.Tenant', name="parent", required=True)
+    tenant_parent = Field('odoo.addons.neorezo.schema.tenant.Tenant', name="parent", required=True)
     invoices = List(
-        Field('odoo.addons.neorezo.schema.invoice.Invoice'),
+        NonNull('odoo.addons.neorezo.schema.invoice.Invoice'),
         refund_only=Boolean(),
         limit=Int(),
         offset=Int(),
