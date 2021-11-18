@@ -6,6 +6,10 @@ from .scalar import OdooType
 
 
 class Tenant(OdooType):
+    class Meta:
+        description = "Tenant defined in ODOO from NeoRezo."
+        odoo_model = "res.company"
+
     name = graphene.String(required=True)
     tenant_prefix = graphene.String(required=True)
     invoices = graphene.List(
