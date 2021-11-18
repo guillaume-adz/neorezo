@@ -42,10 +42,9 @@ class OdooList(List):
 
     def __init__(self, of_type: t.Type[OdooType], resolver=None, **kwargs):
         resolver = resolver or self.record_resolver
-        # super().__init__(NonNull(of_type), required=True, resolver=resolver, limit=Int(), offset=Int(), **kwargs)
-        super().__init__(of_type, resolver=resolver, limit=Int(required=True, default_value= 1), offset=Int(0), **kwargs)
+        super().__init__(of_type, resolver=resolver, limit=Int(), offset=Int(), **kwargs)
 
-    def record_resolver(self, parent, info, **kwargs):
+    def record_resolver(self, parent, info, limit=1, offset=0, **kwargs):
         domain = []
         return odoo_resolver(self._of_type, info, domain=domain, **kwargs)
 
