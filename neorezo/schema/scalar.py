@@ -46,7 +46,9 @@ class OdooList(List):
 
     def record_resolver(self, parent, info, limit=50, offset=0, **kwargs):
         domain = []
-        return odoo_resolver(self._of_type, info, domain=domain, limit=limit, offset=offset, **kwargs)
+        for field, value in kwargs.items():
+            domain.append((field, '=', 'true'))
+        return odoo_resolver(self._of_type, info, domain=domain, limit=limit, offset=offset)
 
 
 class OdooRecord(Field):
