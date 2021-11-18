@@ -1,9 +1,11 @@
 import graphene
 
-from odoo.addons.graphql_base import OdooObjectType
+from .scalar import OdooList
+from .scalar import OdooRecord
+from .scalar import OdooType
 
 
-class Tenant(OdooObjectType):
+class Tenant(OdooType):
     name = graphene.String(required=True)
     tenant_prefix = graphene.String(required=True)
     invoices = graphene.List(
@@ -25,19 +27,5 @@ class Tenant(OdooObjectType):
 
 
 class TenantMixin:
-    tenants = graphene.List(
-        graphene.NonNull(Tenant),
-        required=True,
-        limit=graphene.Int(),
-        offset=graphene.Int(),
-    )
-
-    @staticmethod
-    def resolve_tenants(root, info, **kwargs):
-        domain = []
-        return info.context["env"]["res.company"].search(domain, **kwargs)
-
-    @staticmethod
-    def resolve_invoices(root, info, **kwargs):
-        domain = []
-        return info.context["env"]["account.move"].search(domain, **kwargs)
+    tenants = OdooList(Tenant)
+    tenant = OdooRecord(Tenant)

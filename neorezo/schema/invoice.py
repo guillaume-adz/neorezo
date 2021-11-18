@@ -20,7 +20,6 @@ class Invoice(OdooType):
     name = String(name="ref", required=True)
     move_type = Boolean(required=True)
 
-    customer = String()
     billing_address1 = String(name="address1")
     billing_address2 = String(name="address2")
     billing_company = String(name="company")
@@ -34,9 +33,11 @@ class Invoice(OdooType):
     amount_total_signed = Float(name="total_ttc")
     tax_totals_json = String()
 
+    customer = String()
+
     @staticmethod
-    def resolve_customer(parent, info):
-        return f"{parent.first_name} {parent.last_name}"
+    def resolve_customer(self, info):
+        return f"{self.first_name} {self.last_name}"
 
 
 class InvoiceMixin:

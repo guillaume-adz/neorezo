@@ -5,8 +5,8 @@ from .invoice import InvoiceMixin
 from .tenant import TenantMixin
 
 
-class Query(ObjectType, TenantMixin,InvoiceMixin):
+class Query(ObjectType, TenantMixin, InvoiceMixin):
     ...
 
 
-schema = Schema(query=Query)
+schema = Schema(query=Query, auto_camelcase=False)
