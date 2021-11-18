@@ -18,3 +18,7 @@ class Tenant(models.Model):
         string="Tenant parent",
         help="The invoices of this tenant will be attached to this parent."
     )
+    tenant_active = fields.Boolean(
+        string="Active tenant",
+        help="This tenant is active."
+    )
