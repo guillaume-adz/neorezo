@@ -8,4 +8,7 @@ class Tenant(models.Model):
         ('tenant_prefix', 'unique(tenant_prefix)', "A tenant prefix must be unique.")
     ]
 
-    tenant_prefix = fields.Char(string="Référence du tenant")
+    tenant_prefix = fields.Char(
+        string="Tenant prefix",
+        help="This prefix will be added on all invoices"
+    )

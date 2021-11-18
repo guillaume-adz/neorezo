@@ -2,6 +2,7 @@ import logging
 
 from graphene import Boolean
 from graphene import Float
+from graphene import ID
 from graphene import String
 
 from .scalar import OdooList
@@ -16,6 +17,7 @@ class Invoice(OdooType):
         description = "Invoice defined in ODOO from NeoRezo."
         odoo_model = "account.move"
 
+    id = ID(required=True)
     ref = String(name="name", required=True)
     name = String(name="ref", required=True)
     move_type = Boolean(required=True)
