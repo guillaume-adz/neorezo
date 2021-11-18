@@ -14,7 +14,7 @@ class Tenant(models.Model):
     )
     tenant_parent = fields.Many2one(
         comodel_name="res.company",
-        # auto_join=True,
+        auto_join=True,
         string="Tenant parent",
         help="The invoices of this tenant will be attached to this parent."
     )
