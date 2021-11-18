@@ -21,19 +21,22 @@ class OdooOptions(ObjectTypeOptions):
         _logger.error("OPTIONSSSSSSSSSSSSSSS")
         _logger.error(args)
         _logger.error(kwargs)
-        self.odool_model = kwargs.get('odool_model')
+        self.odool_model = kwargs.get('odoo_model')
         if not self.odool_model:
-            _logger.error(f"No oddo model defined for ")
-        super().__init__(*args, **kwargs)
+            _logger.error(f"No odoo model defined for ")
+        super().__init__(None)
+        _logger.error(self.class_type)
 
 
 class OdooType(OdooObjectType):
 
     @classmethod
-    def __init_subclass_with_meta__(cls, **options):
+    def __init_subclass_with_meta__(cls, **meta_options):
         _logger.error("TRACEEEEEEEEEEEEEEEEEEEE")
-        _logger.error(options)
-        super().__init_subclass_with_meta__(_meta=OdooOptions(**options), **options)
+        _logger.error(meta_options)
+        # options = ObjectTypeOptions()
+        super().__init_subclass_with_meta__(**meta_options)
+        _logger.error(cls._meta)
 
 
 class OdooList(List):
