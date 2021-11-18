@@ -5,8 +5,8 @@ from graphene import Int
 from graphene import List
 from graphene import NonNull
 from graphene import String
-from odoo.addons.graphql_base import OdooObjectType
 from graphene.types.objecttype import ObjectTypeOptions
+from odoo.addons.graphql_base import OdooObjectType
 
 _logger = logging.getLogger(__name__)
 
@@ -17,11 +17,15 @@ def odoo_resolver(object_type, info, domain=None, **kwargs):
 
 class OdooOptions(ObjectTypeOptions):
 
-    def __init__(*args, **kwargs):
+    def __init__(self, *args, **kwargs):
         _logger.error("OPTIONSSSSSSSSSSSSSSS")
         _logger.error(args)
         _logger.error(kwargs)
+        self.odool_model = kwargs.get('odool_model')
+        if not self.odool_model:
+            _logger.error(f"No oddo model defined for ")
         super().__init__(*args, **kwargs)
+
 
 class OdooType(OdooObjectType):
 
@@ -29,7 +33,7 @@ class OdooType(OdooObjectType):
     def __init_subclass_with_meta__(cls, **options):
         _logger.error("TRACEEEEEEEEEEEEEEEEEEEE")
         _logger.error(options)
-        super().__init_subclass_with_meta__(_meta = OdooOptions(**options))
+        super().__init_subclass_with_meta__(_meta=OdooOptions(**options), **options)
 
 
 class OdooList(List):
