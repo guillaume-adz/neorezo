@@ -14,7 +14,7 @@
                     <page string="NeoRezo">
                         <group>
                             <group>
-                                <field name="tenant_prefix"/>
+                                <field name="tenant_prefix" required="1"/>
                             </group>
                         </group>
                     </page>
