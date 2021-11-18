@@ -11,6 +11,7 @@
                     <field name="sequence" widget="handle"/>
                     <field name="name"/>
                     <field name="tenant_prefix"/>
+                    <field name="tenant_parent"/>
                 </tree>
             </field>
         </record>
@@ -27,6 +28,9 @@
                         <group>
                             <group>
                                 <field name="tenant_prefix" required="1"/>
+                            </group>
+                           <group>
+                                <field name="tenant_parent" required="1"/>
                             </group>
                         </group>
                     </page>
