@@ -58,7 +58,7 @@ class GraphQLControllerMixin(object):
                 query_data=request.args,
                 batch_enabled=False,
                 catch=False,
-                context={"env": http.request.env},
+                context_value={"env": http.request.env},
             )
             result, status_code = encode_execution_results(
                 execution_results,
