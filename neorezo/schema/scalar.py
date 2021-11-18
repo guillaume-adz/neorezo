@@ -21,11 +21,12 @@ class OdooOptions(ObjectTypeOptions):
         _logger.error("OPTIONSSSSSSSSSSSSSSS")
         _logger.error(args)
         _logger.error(kwargs)
-        self.odool_model = kwargs.get('odoo_model')
-        if not self.odool_model:
-            _logger.error(f"No odoo model defined for ")
         super().__init__(None)
+        self.odool_model = kwargs.pop('odoo_model', None)
+        if not self.odool_model:
+            _logger.error(f"No odoo model defined for {self}")
         _logger.error(self.class_type)
+        # setattr(cls, "odoo_model", odoo_model)
 
 
 class OdooType(OdooObjectType):
@@ -34,8 +35,8 @@ class OdooType(OdooObjectType):
     def __init_subclass_with_meta__(cls, **meta_options):
         _logger.error("TRACEEEEEEEEEEEEEEEEEEEE")
         _logger.error(meta_options)
-        # options = ObjectTypeOptions()
-        super().__init_subclass_with_meta__(**meta_options)
+        meta = OdooOptions(**meta_options)
+        super().__init_subclass_with_meta__(_meta=meta, **meta_options)
         odoo_model = meta_options.get('odoo_model')
         if not odoo_model:
             _logger.error(f"No odoo model defined for {cls._meta.name}")
@@ -63,6 +64,6 @@ class OdooRecord(Field):
 
     def record_resolver(self, parent, info, id, **kwargs):
         # _logger.error(self._type.__class__._meta.odoo_model)
-        _logger.error(self._type.__class__.odoo_model)
+        _logger.error(self._type._meta.__class__.odoo_model)
         domain = [('id' '=', id)]
         return odoo_resolver(self._type, info, domain=domain, **kwargs)
