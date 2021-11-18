@@ -11,7 +11,7 @@ class Tenant(OdooType):
         odoo_model = "res.company"
 
     name = graphene.String(required=True)
-    tenant_prefix = graphene.String("prefix", required=True)
+    tenant_prefix = graphene.String(name="prefix", required=True)
     invoices = graphene.List(
         graphene.NonNull('odoo.addons.neorezo.schema.invoice.Invoice'),
         refund_only=graphene.Boolean(),
