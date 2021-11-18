@@ -52,7 +52,7 @@ class OdooList(List):
         super().__init__(of_type, required=True, resolver=resolver, limit=Int(), offset=Int(), **kwargs)
 
     def record_resolver(self, parent, info, **kwargs):
-        domain = [[]]
+        domain = []
         return odoo_resolver(self._of_type, info, domain=domain, **kwargs)
 
 
