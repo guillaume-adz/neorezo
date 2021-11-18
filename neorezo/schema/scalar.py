@@ -24,7 +24,7 @@ class OdooType(OdooObjectType):
     def __init_subclass_with_meta__(cls, **meta_options):
         odoo_model = meta_options.pop('odoo_model', None)
         if not odoo_model:
-            raise Exception(f"No odoo model defined among meta options: {meta_options}")
+            raise TypeError(f"No odoo model defined among meta options: {meta_options}")
         meta = OdooOptions(cls, odoo_model)
         super().__init_subclass_with_meta__(_meta=meta, **meta_options)
 
