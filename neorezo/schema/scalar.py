@@ -35,8 +35,8 @@ class OdooType(OdooObjectType):
 
 def odoo_resolver(object_type:OdooType, info, domain=None, **kwargs):
     _logger.error(object_type)
-    _logger.error(object_type._type)
-    _logger.error(object_type._type.odoo_model)
+    _logger.error(object_type._meta)
+    _logger.error(object_type._meta.odoo_model)
     return info.context["env"][object_type.odoo_model].search(domain, **kwargs)
 
 
