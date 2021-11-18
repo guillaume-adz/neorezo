@@ -16,5 +16,5 @@ class Tenant(models.Model):
         comodel_name="res.company",
         auto_join=True,
         string="Tenant parent",
-        help="This tenant is attached to this parent."
+        help="The invoices of this tenant will be attached to this parent."
     )

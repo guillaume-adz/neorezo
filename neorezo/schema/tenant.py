@@ -18,7 +18,7 @@ class Tenant(OdooType):
     id = ID(required=True)
     name = String(required=True)
     tenant_prefix = String(name="prefix", required=True)
-    tenant_parent = Field('odoo.addons.neorezo.schema.tenant.Tenant', name="parent", required=True)
+    # tenant_parent = Field('odoo.addons.neorezo.schema.tenant.Tenant', name="parent", required=True)
     invoices = List(
         Field('odoo.addons.neorezo.schema.invoice.Invoice'),
         refund_only=Boolean(),
