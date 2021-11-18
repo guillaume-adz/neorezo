@@ -1,9 +1,9 @@
 import logging
+import typing as t
 
 from graphene import Field
 from graphene import Int
 from graphene import List
-from graphene import NonNull
 from graphene import String
 from graphene.types.objecttype import ObjectTypeOptions
 from odoo.addons.graphql_base import OdooObjectType
@@ -33,10 +33,12 @@ class OdooType(OdooObjectType):
         return cls._meta.odoo_model
 
 
-def odoo_resolver(object_type:OdooType, info, domain=None, **kwargs):
-    _logger.error("odoo_resolverodoo_resolverodoo_resolverodoo_resolverodoo_resolverodoo_resolverodoo_resolverodoo_resolver")
-    _logger.error(object_type.odoo_model())
-    res =  info.context["env"][object_type.odoo_model()].search(domain, **kwargs)
+def odoo_resolver(object_type: OdooType, info, domain=None, **kwargs):
+    _logger.error(
+        "odoo_resolverodoo_resolverodoo_resolverodoo_resolverodoo_resolverodoo_resolverodoo_resolverodoo_resolver")
+    _logger.error(domain)
+    _logger.error(kwargs)
+    res = info.context["env"][object_type.odoo_model()].search(domain, **kwargs)
     _logger.error(res)
     return res
 
@@ -44,7 +46,7 @@ def odoo_resolver(object_type:OdooType, info, domain=None, **kwargs):
 class OdooList(List):
     """A graphene List with an Odoo aware default resolver."""
 
-    def __init__(self, of_type: OdooType, resolver=None, **kwargs):
+    def __init__(self, of_type: t.Type[OdooType], resolver=None, **kwargs):
         resolver = resolver or self.record_resolver
         # super().__init__(NonNull(of_type), required=True, resolver=resolver, limit=Int(), offset=Int(), **kwargs)
         super().__init__(of_type, required=True, resolver=resolver, limit=Int(), offset=Int(), **kwargs)
@@ -57,7 +59,7 @@ class OdooList(List):
 class OdooRecord(Field):
     """A graphene Field with an Odoo aware default resolver."""
 
-    def __init__(self, of_type: OdooType, resolver=None, **kwargs):
+    def __init__(self, of_type: t.Type[OdooType], resolver=None, **kwargs):
         resolver = resolver or self.record_resolver
         super().__init__(of_type, resolver=resolver, id=String(required=True))
 
