@@ -41,7 +41,3 @@ class Invoice(OdooType):
 class InvoiceMixin:
     invoices = OdooList(Invoice)
     invoice = OdooRecord(Invoice)
-
-    @staticmethod
-    def resolve_invoice(parent, info, id, **kwargs):
-        return f"{parent.first_name} {parent.last_name}"
