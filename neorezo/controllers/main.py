@@ -24,7 +24,7 @@ class NeoRezoController(http.Controller, GraphQLControllerMixin):
     # requests. If you only need to accept GET requests or POST
     # with application/x-www-form-urlencoded content,
     # this is not necessary.
-    GraphQLControllerMixin.patch_for_json("^/graphql/?$")
+    GraphQLControllerMixin.patch_for_json("^/graphql$")
 
     # The graphql route, for applications.
     # Note csrf=False: you may want to apply extra security
