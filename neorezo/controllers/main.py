@@ -25,7 +25,6 @@ class NeoRezoController(http.Controller, GraphQLControllerMixin):
     # with application/x-www-form-urlencoded content,
     # this is not necessary.
     GraphQLControllerMixin.patch_for_json("^/graphql/?$")
-    _logger.info('HTTPPPPPPPPPPPPPPPPPP')
 
     # The graphql route, for applications.
     # Note csrf=False: you may want to apply extra security
