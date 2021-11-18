@@ -13,7 +13,7 @@ _logger = logging.getLogger(__name__)
 class NeoRezoController(http.Controller, GraphQLControllerMixin):
 
     # The GraphiQL route, providing an IDE for developers
-    @http.route("/graphiql", auth="apikey", csrf=False)
+    @http.route("/graphiql", auth="none", csrf=False)
     def graphiql(self, **kwargs):
         try:
             return self._handle_graphiql_request(schema)
