@@ -34,6 +34,7 @@ class OdooType(OdooObjectType):
 
 
 def odoo_resolver(object_type:OdooType, info, domain=None, **kwargs):
+    _logger.error("odoo_resolverodoo_resolverodoo_resolverodoo_resolverodoo_resolverodoo_resolverodoo_resolverodoo_resolver")
     _logger.error(object_type.odoo_model)
     res =  info.context["env"][object_type.odoo_model].search(domain, **kwargs)
     _logger.error(res)
@@ -45,7 +46,8 @@ class OdooList(List):
 
     def __init__(self, of_type: OdooType, resolver=None, **kwargs):
         resolver = resolver or self.record_resolver
-        super().__init__(NonNull(of_type), required=True, resolver=resolver, limit=Int(), offset=Int(), **kwargs)
+        # super().__init__(NonNull(of_type), required=True, resolver=resolver, limit=Int(), offset=Int(), **kwargs)
+        super().__init__(of_type, required=True, resolver=resolver, limit=Int(), offset=Int(), **kwargs)
 
     def record_resolver(self, parent, info, **kwargs):
         domain = [[]]
