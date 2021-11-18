@@ -11,10 +11,6 @@ from odoo.addons.graphql_base import OdooObjectType
 _logger = logging.getLogger(__name__)
 
 
-def odoo_resolver(object_type, info, domain=None, **kwargs):
-    return info.context["env"][object_type._meta.odoo_model].search(domain, **kwargs)
-
-
 class OdooOptions(ObjectTypeOptions):
 
     def __init__(self, cls, odoo_model):
@@ -37,6 +33,10 @@ class OdooType(OdooObjectType):
         return self._meta.odoo_model
 
 
+def odoo_resolver(object_type:OdooType, info, domain=None, **kwargs):
+    return info.context["env"][object_type.odoo_model].search(domain, **kwargs)
+
+
 class OdooList(List):
     """A graphene List with an Odoo aware default resolver."""
 
@@ -57,7 +57,6 @@ class OdooRecord(Field):
         super().__init__(of_type, resolver=resolver, id=String(required=True))
 
     def record_resolver(self, parent, info, id, **kwargs):
-        # _logger.error(self._type._meta.odoo_model)
         _logger.error(self._type.odoo_model)
         domain = [('id', '=', id)]
         return odoo_resolver(self._type, info, domain=domain, **kwargs)
