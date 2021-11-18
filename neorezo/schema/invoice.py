@@ -16,7 +16,8 @@ class Invoice(OdooType):
         description = "Invoice defined in ODOO from NeoRezo."
         odoo_model = "account.move"
 
-    name = String(required=True)
+    name = String(name="ref", required=True)
+    internal_name = String(name="name", required=True)
     move_type = Boolean(required=True)
 
     customer = String()
