@@ -6,7 +6,6 @@ from graphene import ID
 from graphene import String
 
 from .scalar import OdooList
-from .scalar import OdooRecord
 from .scalar import OdooType
 
 _logger = logging.getLogger(__name__)
@@ -44,4 +43,3 @@ class Invoice(OdooType):
 
 class InvoiceMixin:
     invoices = OdooList(Invoice)
-    invoice = OdooRecord(Invoice)

@@ -7,7 +7,6 @@ from graphene import NonNull
 from graphene import String
 
 from .scalar import OdooList
-from .scalar import OdooRecord
 from .scalar import OdooType
 
 
@@ -40,4 +39,3 @@ class Tenant(OdooType):
 
 class TenantMixin:
     tenants = OdooList(Tenant, tenant_active=Boolean(name="actif"), required=True)
-    tenant = OdooRecord(Tenant)
