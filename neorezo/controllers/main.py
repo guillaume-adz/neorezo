@@ -34,4 +34,5 @@ class NeoRezoController(http.Controller, GraphQLControllerMixin):
         try:
             return self._handle_graphql_request(schema)
         except Exception as e:
-            _logger.info(str(e))
+            _logger.error("ERRRRRRRRRRRRRRRRRRRRRR")
+            _logger.error(str(e))

@@ -15,8 +15,6 @@ from graphql_server import (
 
 from odoo import http
 
-import logging
-_logger = logging.getLogger(__name__)
 
 class GraphQLControllerMixin(object):
     @staticmethod
@@ -26,13 +24,9 @@ class GraphQLControllerMixin(object):
         # of type 'http' but called with a request of type 'json'"
         path_re = re.compile(path_re)
         orig_get_request = http.Root.get_request
-        _logger.info('HTTPPPPPPPPPPPPPPPPPP11111111111')
 
         def get_request(self, httprequest):
-            _logger.info('HTTPPPPPPPPPPPPPPPPPP22222222')
-
             if path_re.match(httprequest.path):
-                _logger.info('HTTPPPPPPPPPPPPPPPPPP33333')
                 return http.HttpRequest(httprequest)
             return orig_get_request(self, httprequest)
 
