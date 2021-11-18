@@ -28,9 +28,9 @@ class OdooType(OdooObjectType):
         meta = OdooOptions(cls, odoo_model)
         super().__init_subclass_with_meta__(_meta=meta, **meta_options)
 
-    @property
-    def odoo_model(self):
-        return self._meta.odoo_model
+    @classmethod
+    def odoo_model(cls):
+        return cls._meta.odoo_model
 
 
 def odoo_resolver(object_type:OdooType, info, domain=None, **kwargs):
