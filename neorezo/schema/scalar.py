@@ -39,7 +39,6 @@ class OdooList(graphene.List):
 
     def __init__(self, of_type: t.Type[OdooType], resolver=None, **kwargs):
         resolver = resolver or self.record_resolver
-        _logger.error("INITTTTTTTTTTTTTTTTTTTTTTTTTTTTTT")
         for field_name, field_type in of_type.fields().items():
             name = field_type.name or field_name
             arg = self.from_field_to_arg(field_type.type)
@@ -50,9 +49,6 @@ class OdooList(graphene.List):
     def record_resolver(self, parent, info, limit=50, offset=0, **kwargs):
         domain = []
         for field, value in kwargs.items():
-            _logger.error("RESSSSSSSSSSSSSSSSOLVE")
-            _logger.error(field)
-            _logger.error(value)
             domain.append((field, '=', value))
         return info.context["env"][self._of_type.odoo_model()].search(domain, limit=limit, offset=offset)
 
