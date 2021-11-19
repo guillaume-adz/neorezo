@@ -17,6 +17,7 @@ SCALARS = [
 
 
 class OdooOptions(ObjectTypeOptions):
+    """Extends Meta model with Odoo model."""
 
     def __init__(self, cls, odoo_model):
         super().__init__(cls)
@@ -49,7 +50,7 @@ class OdooList(graphene.List):
         resolver = resolver or self.record_resolver
         for field_name, field_type in of_type.fields().items():
             name = field_type.name or field_name
-            arg = self.from_field_to_arg(field_type.type)
+            arg = self._from_field_to_arg(field_type.type)
             if arg:
                 kwargs[field_name] = arg(name=name)
         super().__init__(of_type, resolver=resolver, limit=graphene.Int(), offset=graphene.Int(), **kwargs)
@@ -57,11 +58,15 @@ class OdooList(graphene.List):
     def record_resolver(self, parent, info, limit=50, offset=0, **kwargs):
         domain = []
         for field, value in kwargs.items():
-            domain.append((field, '=', value))
+            domain.append(self._filter(field, value))
         return info.context["env"][self._of_type.odoo_model()].search(domain, limit=limit, offset=offset)
 
-    def from_field_to_arg(self, scalar):
+    def _from_field_to_arg(self, scalar):
         if scalar in SCALARS:
             return scalar
         if isinstance(scalar, graphene.NonNull):
-            return self.from_field_to_arg(scalar._of_type)
+            return self._from_field_to_arg(scalar._of_type)
+
+    def _filter(self, field, value):
+        """This funtion may be redefined for specific filtering."""
+        return field, '=', value
