@@ -1,10 +1,7 @@
 import logging
 import typing as t
 
-from graphene import Boolean
-from graphene import Int
-from graphene import List
-from graphene import String
+import graphene
 from graphene.types.objecttype import ObjectTypeOptions
 from odoo.addons.graphql_base import OdooObjectType
 
@@ -37,7 +34,7 @@ class OdooType(OdooObjectType):
         return cls._meta.odoo_model
 
 
-class OdooList(List):
+class OdooList(graphene.List):
     """A graphene List with an Odoo aware default resolver."""
 
     def __init__(self, of_type: t.Type[OdooType], resolver=None, **kwargs):
@@ -46,10 +43,13 @@ class OdooList(List):
         for field_name, field_type in of_type.fields().items():
             _logger.error(field_name)
             _logger.error(field_type.type)
-            if (field_type.type is Boolean) or (field_type.type is Int) or (field_type.type is String):
+            if (field_type.type is graphene.Boolean) or (field_type.type is graphene.Int) or (field_type.type is graphene.String):
                 _logger.error(f"{field_name} ADDED")
                 kwargs[field_name] = field_type.type()
-        super().__init__(of_type, resolver=resolver, limit=Int(), offset=Int(), **kwargs)
+            elif (field_type.type is graphene.NonNull):
+                _logger.error(f"{field_name} ADDED2")
+                kwargs[field_name] = field_type.type().type()
+        super().__init__(of_type, resolver=resolver, limit=graphene.Int(), offset=graphene.Int(), **kwargs)
 
     def record_resolver(self, parent, info, limit=50, offset=0, **kwargs):
         domain = []
