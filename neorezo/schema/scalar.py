@@ -1,7 +1,9 @@
 import logging
 import typing as t
 
+from graphene import Boolean
 from graphene import Int
+from graphene import String
 from graphene import List
 from graphene.types.argument import to_arguments
 from graphene.types.objecttype import ObjectTypeOptions
@@ -45,7 +47,7 @@ class OdooList(List):
         for field_name, field_type in of_type.fields().items():
             _logger.error(field_name)
             _logger.error(field_type)
-            if field_type is Int:
+            if field_type is Boolean or field_type is Int or field_type is String:
                 _logger.error(f"{field_name} ADDED")
                 kwargs[field_name] = to_arguments(field_type)
         super().__init__(of_type, resolver=resolver, limit=Int(), offset=Int(), **kwargs)
