@@ -53,7 +53,7 @@ class OdooList(graphene.List):
                         internal_type is graphene.String):
                     _logger.error(f"{field_name} ADDED3")
                     kwargs[field_name] = internal_type()
-                kwargs[field_name] = field_type.type._of_type.type()
+                # kwargs[field_name] = field_type.type._of_type.type()
         super().__init__(of_type, resolver=resolver, limit=graphene.Int(), offset=graphene.Int(), **kwargs)
 
     def record_resolver(self, parent, info, limit=50, offset=0, **kwargs):
@@ -65,8 +65,6 @@ class OdooList(graphene.List):
             domain.append((field, '=', value))
         return info.context["env"][self._of_type.odoo_model()].search(domain, limit=limit, offset=offset)
 
-    def from_field_to_arg(self, field_type):
-        type_ = field_type.type
-        if (type_ is graphene.Boolean) or (type_ is graphene.Int) or (type_ is graphene.String):
-            _logger.error(f"{field_name} ADDED")
-            kwargs[field_name] = field_type.type()
+    def from_field_to_arg(self, scalar_type):
+        if (scalar_type is graphene.Boolean) or (scalar_type is graphene.Int) or (scalar_type is graphene.String):
+            return  scalar_type()
