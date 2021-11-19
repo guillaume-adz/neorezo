@@ -42,18 +42,17 @@ class OdooList(graphene.List):
         _logger.error("INITTTTTTTTTTTTTTTTTTTTTTTTTTTTTT")
         for field_name, field_type in of_type.fields().items():
             _logger.error(field_name)
-            if (field_type.type is graphene.Boolean) or (field_type.type is graphene.Int) or (
-                    field_type.type is graphene.String):
+            scalar_type = field_type.type
+            if (scalar_type is graphene.Boolean) or (scalar_type is graphene.Int) or (scalar_type is graphene.String):
                 _logger.error(f"{field_name} ADDED")
-                kwargs[field_name] = field_type.type()
-            elif isinstance(field_type.type, graphene.NonNull):
+                kwargs[field_name] = scalar_type(name=field_name)
+            elif isinstance(scalar_type, graphene.NonNull):
                 _logger.error(f"{field_name} ADDED2")
-                internal_type = field_type.type._of_type
-                if (internal_type is graphene.Boolean) or (internal_type is graphene.Int) or (
-                        internal_type is graphene.String):
+                scalar_type = scalar_type._of_type
+                if (scalar_type is graphene.Boolean) or (scalar_type is graphene.Int) or (
+                        scalar_type is graphene.String):
                     _logger.error(f"{field_name} ADDED3")
-                    kwargs[field_name] = internal_type()
-                # kwargs[field_name] = field_type.type._of_type.type()
+                    kwargs[field_name] = scalar_type(name=field_name)
         super().__init__(of_type, resolver=resolver, limit=graphene.Int(), offset=graphene.Int(), **kwargs)
 
     def record_resolver(self, parent, info, limit=50, offset=0, **kwargs):
@@ -67,4 +66,6 @@ class OdooList(graphene.List):
 
     def from_field_to_arg(self, scalar_type):
         if (scalar_type is graphene.Boolean) or (scalar_type is graphene.Int) or (scalar_type is graphene.String):
-            return  scalar_type()
+            return scalar_type()
+        if isinstance(scalar_type, graphene.NonNull):
+            return self.from_field_to_arg(scalar_type._of_type)
