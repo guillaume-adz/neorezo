@@ -44,9 +44,9 @@ class OdooList(graphene.List):
             name = field_type.name or field_name
             scalar_type = field_type.type
             _logger.error(name)
-            arg = self.from_field_to_arg(field_type)
+            arg = self.from_field_to_arg(scalar_type)
             if arg:
-                kwargs[field_type.name or field_name] = arg(name = name)
+                kwargs[name] = arg(name = name)
             # if (scalar_type is graphene.Boolean) or (scalar_type is graphene.Int) or (scalar_type is graphene.String):
             #     _logger.error(f"{field_name} ADDED")
             #     kwargs[field_name] = scalar_type()
