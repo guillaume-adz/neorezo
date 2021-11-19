@@ -40,11 +40,17 @@ class OdooList(List):
 
     def __init__(self, of_type: t.Type[OdooType], resolver=None, **kwargs):
         resolver = resolver or self.record_resolver
-        _logger.error(of_type.fields())
+        for field_name, field_type in of_type.fields().items():
+            _logger.error("INITTTTTTTTTTTTTTTTTTTTTTTTTTTTTT")
+            _logger.error(of_type.fields())
+            kwargs[field_name] = field_type
         super().__init__(of_type, resolver=resolver, limit=Int(), offset=Int(), **kwargs)
 
     def record_resolver(self, parent, info, limit=50, offset=0, **kwargs):
         domain = []
         for field, value in kwargs.items():
+            _logger.error("RESSSSSSSSSSSSSSSSOLVE")
+            _logger.error(field)
+            _logger.error(value)
             domain.append((field, '=', value))
         return info.context["env"][self._of_type.odoo_model()].search(domain, limit=limit, offset=offset)
