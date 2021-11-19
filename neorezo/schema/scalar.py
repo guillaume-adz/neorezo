@@ -41,8 +41,8 @@ class OdooList(graphene.List):
         resolver = resolver or self.record_resolver
         _logger.error("INITTTTTTTTTTTTTTTTTTTTTTTTTTTTTT")
         for field_name, field_type in of_type.fields().items():
-            _logger.error(field_type.name or field_name)
             scalar_type = field_type.type
+            _logger.error(field_type.name or field_name)
             arg = self.from_field_to_arg(field_type)
             if arg:
                 kwargs[field_type.name or field_name] = arg
