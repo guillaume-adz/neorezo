@@ -7,6 +7,14 @@ from odoo.addons.graphql_base import OdooObjectType
 
 _logger = logging.getLogger(__name__)
 
+SCALARS = [
+    graphene.Boolean,
+    graphene.Int,
+    graphene.Float,
+    graphene.String,
+    graphene.ID,
+]
+
 
 class OdooOptions(ObjectTypeOptions):
 
@@ -52,8 +60,8 @@ class OdooList(graphene.List):
             domain.append((field, '=', value))
         return info.context["env"][self._of_type.odoo_model()].search(domain, limit=limit, offset=offset)
 
-    def from_field_to_arg(self, scalar_type):
-        if (scalar_type is graphene.Boolean) or (scalar_type == graphene.Int) or (scalar_type == graphene.String):
-            return scalar_type
-        if isinstance(scalar_type, graphene.NonNull):
-            return self.from_field_to_arg(scalar_type._of_type)
+    def from_field_to_arg(self, scalar):
+        if scalar in SCALARS:
+            return scalar
+        if isinstance(scalar, graphene.NonNull):
+            return self.from_field_to_arg(scalar._of_type)
