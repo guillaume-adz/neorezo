@@ -3,8 +3,8 @@ import typing as t
 
 from graphene import Int
 from graphene import List
-from graphene.types.objecttype import ObjectTypeOptions
 from graphene.types.argument import to_arguments
+from graphene.types.objecttype import ObjectTypeOptions
 from odoo.addons.graphql_base import OdooObjectType
 
 _logger = logging.getLogger(__name__)
@@ -42,11 +42,12 @@ class OdooList(List):
     def __init__(self, of_type: t.Type[OdooType], resolver=None, **kwargs):
         resolver = resolver or self.record_resolver
         _logger.error("INITTTTTTTTTTTTTTTTTTTTTTTTTTTTTT")
-        args = to_arguments(of_type.fields())
-        _logger.error(args)
-        for field_name, field_type in args.items():
-            _logger.error(of_type.fields())
-            kwargs[field_name] = to_arguments(field_type)
+        for field_name, field_type in of_type.fields():
+            _logger.error(field_name)
+            _logger.error(field_type)
+            if field_type is Int:
+                _logger.error(f"{field_name} ADDED")
+                kwargs[field_name] = to_arguments(field_type)
         super().__init__(of_type, resolver=resolver, limit=Int(), offset=Int(), **kwargs)
 
     def record_resolver(self, parent, info, limit=50, offset=0, **kwargs):
