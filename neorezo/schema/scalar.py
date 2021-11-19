@@ -3,9 +3,8 @@ import typing as t
 
 from graphene import Boolean
 from graphene import Int
-from graphene import String
 from graphene import List
-from graphene.types.argument import to_arguments
+from graphene import String
 from graphene.types.objecttype import ObjectTypeOptions
 from odoo.addons.graphql_base import OdooObjectType
 
@@ -46,8 +45,8 @@ class OdooList(List):
         _logger.error("INITTTTTTTTTTTTTTTTTTTTTTTTTTTTTT")
         for field_name, field_type in of_type.fields().items():
             _logger.error(field_name)
-            _logger.error(field_type)
-            _type = field_type._type
+            _type = field_type.get_type()
+            _logger.error(_type)
             if (_type is Boolean) or (_type is Int) or (_type is String):
                 _logger.error(f"{field_name} ADDED")
                 kwargs[field_name] = _type()
