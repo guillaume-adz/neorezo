@@ -45,11 +45,10 @@ class OdooList(List):
         _logger.error("INITTTTTTTTTTTTTTTTTTTTTTTTTTTTTT")
         for field_name, field_type in of_type.fields().items():
             _logger.error(field_name)
-            _type = field_type.get_type()
-            _logger.error(_type)
-            if (_type is Boolean) or (_type is Int) or (_type is String):
+            _logger.error(field_type.type)
+            if (field_type.type is Boolean) or (field_type.type is Int) or (field_type.type is String):
                 _logger.error(f"{field_name} ADDED")
-                kwargs[field_name] = _type()
+                kwargs[field_name] = field_type.type()
         super().__init__(of_type, resolver=resolver, limit=Int(), offset=Int(), **kwargs)
 
     def record_resolver(self, parent, info, limit=50, offset=0, **kwargs):
