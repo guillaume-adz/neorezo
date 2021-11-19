@@ -47,7 +47,7 @@ class OdooList(graphene.List):
                 kwargs[field_name] = field_type.type()
             elif (isinstance(field_type.type, graphene.NonNull)):
                 _logger.error(f"{field_name} ADDED2")
-                kwargs[field_name] = field_type.type._of_type
+                kwargs[field_name] = field_type.type._of_type()
         super().__init__(of_type, resolver=resolver, limit=graphene.Int(), offset=graphene.Int(), **kwargs)
 
     def record_resolver(self, parent, info, limit=50, offset=0, **kwargs):
