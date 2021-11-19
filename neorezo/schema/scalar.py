@@ -27,6 +27,10 @@ class OdooType(OdooObjectType):
         super().__init_subclass_with_meta__(_meta=meta, **meta_options)
 
     @classmethod
+    def fields(cls):
+        return cls._meta.fields
+
+    @classmethod
     def odoo_model(cls):
         return cls._meta.odoo_model
 
@@ -36,7 +40,7 @@ class OdooList(List):
 
     def __init__(self, of_type: t.Type[OdooType], resolver=None, **kwargs):
         resolver = resolver or self.record_resolver
-        _logger.error(of_type._fields)
+        _logger.error(of_type.fields())
         super().__init__(of_type, resolver=resolver, limit=Int(), offset=Int(), **kwargs)
 
     def record_resolver(self, parent, info, limit=50, offset=0, **kwargs):
