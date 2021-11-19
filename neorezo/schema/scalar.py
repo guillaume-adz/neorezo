@@ -49,8 +49,8 @@ class OdooList(graphene.List):
             elif isinstance(field_type.type, graphene.NonNull):
                 _logger.error(f"{field_name} ADDED2")
                 internal_type = field_type.type._of_type
-                if (internal_type.type is graphene.Boolean) or (internal_type.type is graphene.Int) or (
-                        internal_type.type is graphene.String):
+                if (internal_type is graphene.Boolean) or (internal_type is graphene.Int) or (
+                        internal_type is graphene.String):
                     _logger.error(f"{field_name} ADDED3")
                     kwargs[field_name] = internal_type()
                 kwargs[field_name] = field_type.type._of_type.type()
@@ -64,3 +64,9 @@ class OdooList(graphene.List):
             _logger.error(value)
             domain.append((field, '=', value))
         return info.context["env"][self._of_type.odoo_model()].search(domain, limit=limit, offset=offset)
+
+    def from_field_to_arg(self, field_type):
+        type_ = field_type.type
+        if (type_ is graphene.Boolean) or (type_ is graphene.Int) or (type_ is graphene.String):
+            _logger.error(f"{field_name} ADDED")
+            kwargs[field_name] = field_type.type()
