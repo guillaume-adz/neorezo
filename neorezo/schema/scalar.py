@@ -41,12 +41,11 @@ class OdooList(graphene.List):
         resolver = resolver or self.record_resolver
         _logger.error("INITTTTTTTTTTTTTTTTTTTTTTTTTTTTTT")
         for field_name, field_type in of_type.fields().items():
-            _logger.error(field_name)
+            _logger.error(field_type.name or field_name)
             scalar_type = field_type.type
-            _logger.error(field_type.name)
             arg = self.from_field_to_arg(field_type)
             if arg:
-                kwargs[field_type.name] = arg
+                kwargs[field_type.name or field_name] = arg
             # if (scalar_type is graphene.Boolean) or (scalar_type is graphene.Int) or (scalar_type is graphene.String):
             #     _logger.error(f"{field_name} ADDED")
             #     kwargs[field_name] = scalar_type()
@@ -57,6 +56,7 @@ class OdooList(graphene.List):
             #             scalar_type is graphene.String):
             #         _logger.error(f"{field_name} ADDED3")
             #         kwargs[field_name] = scalar_type()
+        _logger.error(kwargs)
         super().__init__(of_type, resolver=resolver, limit=graphene.Int(), offset=graphene.Int(), **kwargs)
 
     def record_resolver(self, parent, info, limit=50, offset=0, **kwargs):
