@@ -42,7 +42,7 @@ class OdooList(List):
     def __init__(self, of_type: t.Type[OdooType], resolver=None, **kwargs):
         resolver = resolver or self.record_resolver
         _logger.error("INITTTTTTTTTTTTTTTTTTTTTTTTTTTTTT")
-        for field_name, field_type in of_type.fields():
+        for field_name, field_type in of_type.fields().items():
             _logger.error(field_name)
             _logger.error(field_type)
             if field_type is Int:
