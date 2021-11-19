@@ -53,7 +53,9 @@ class OdooList(graphene.List):
         return info.context["env"][self._of_type.odoo_model()].search(domain, limit=limit, offset=offset)
 
     def from_field_to_arg(self, scalar_type):
-        if (scalar_type is graphene.Boolean) or (scalar_type is graphene.Int) or (scalar_type is graphene.String):
+        if (scalar_type == graphene.Boolean) or (scalar_type == graphene.Int) or (scalar_type == graphene.String):
             return scalar_type
-        if isinstance(scalar_type, graphene.NonNull):
+        if scalar_type is graphene.NonNull:
             return self.from_field_to_arg(scalar_type._of_type)
+        # if isinstance(scalar_type, graphene.NonNull):
+        #     return self.from_field_to_arg(scalar_type._of_type)
