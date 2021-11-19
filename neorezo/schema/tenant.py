@@ -38,4 +38,4 @@ class Tenant(OdooType):
 
 
 class TenantMixin:
-    tenants = OdooList(Tenant, tenant_active=Boolean(name="actif"), required=True)
+    tenants = OdooList(Tenant, required=True)
