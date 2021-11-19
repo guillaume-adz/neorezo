@@ -1,10 +1,4 @@
-from graphene import Boolean
-from graphene import Field
-from graphene import ID
-from graphene import Int
-from graphene import List
-from graphene import NonNull
-from graphene import String
+import graphene
 
 from .scalar import OdooList
 from .scalar import OdooType
@@ -15,16 +9,16 @@ class Tenant(OdooType):
         description = "Tenant defined in ODOO from NeoRezo."
         odoo_model = "res.company"
 
-    id = ID(required=True)
-    name = String(required=True)
-    tenant_prefix = String(name="prefix", required=True)
-    tenant_parent = Field('odoo.addons.neorezo.schema.tenant.Tenant', name="parent", required=True)
-    tenant_active = Boolean(name="actif", required=True)
-    invoices = List(
-        NonNull('odoo.addons.neorezo.schema.invoice.Invoice'),
-        refund_only=Boolean(),
-        limit=Int(),
-        offset=Int(),
+    id = graphene.ID(required=True)
+    name = graphene.String(required=True)
+    tenant_prefix = graphene.String(name="prefix", required=True)
+    tenant_parent = graphene.Field('odoo.addons.neorezo.schema.tenant.Tenant', name="parent", required=True)
+    tenant_active = graphene.Boolean(name="actif", required=True)
+    invoices = graphene.List(
+        graphene.NonNull('odoo.addons.neorezo.schema.invoice.Invoice'),
+        refund_only=graphene.Boolean(),
+        limit=graphene.Int(),
+        offset=graphene.Int(),
     )
 
     @staticmethod

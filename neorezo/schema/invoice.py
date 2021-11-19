@@ -1,9 +1,6 @@
 import logging
 
-from graphene import Boolean
-from graphene import Float
-from graphene import ID
-from graphene import String
+import graphene
 
 from .scalar import OdooList
 from .scalar import OdooType
@@ -16,25 +13,25 @@ class Invoice(OdooType):
         description = "Invoice defined in ODOO from NeoRezo."
         odoo_model = "account.move"
 
-    id = ID(required=True)
-    ref = String(name="name", required=True)
-    name = String(name="ref", required=True)
-    move_type = Boolean(required=True)
+    id = graphene.ID(required=True)
+    ref = graphene.String(name="name", required=True)
+    name = graphene.String(name="ref", required=True)
+    move_type = graphene.Boolean(required=True)
 
-    billing_address1 = String(name="address1")
-    billing_address2 = String(name="address2")
-    billing_company = String(name="company")
-    billing_country = String(name="country")
-    billing_email = String(name="email")
-    billing_first_name = String(name="first_name")
-    billing_last_name = String(name="last_name")
-    billing_phone = String(name="phone")
-    billing_zip = String(name="zip")
+    billing_address1 = graphene.String(name="address1")
+    billing_address2 = graphene.String(name="address2")
+    billing_company = graphene.String(name="company")
+    billing_country = graphene.String(name="country")
+    billing_email = graphene.String(name="email")
+    billing_first_name = graphene.String(name="first_name")
+    billing_last_name = graphene.String(name="last_name")
+    billing_phone = graphene.String(name="phone")
+    billing_zip = graphene.String(name="zip")
 
-    amount_total_signed = Float(name="total_ttc")
-    tax_totals_json = String()
+    amount_total_signed = graphene.Float(name="total_ttc")
+    tax_totals_json = graphene.String()
 
-    customer = String()
+    customer = graphene.String()
 
     @staticmethod
     def resolve_customer(self, info):
