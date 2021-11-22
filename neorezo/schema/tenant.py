@@ -1,10 +1,9 @@
 import graphene
+from odoo.addons.graphql_base.scalar import OdooList
+from odoo.addons.graphql_base.scalar import OdooListType
 
-from .scalar import OdooList
-from .scalar import OdooType
 
-
-class Tenant(OdooType):
+class Tenant(OdooListType):
     class Meta:
         description = "Tenant defined in ODOO from NeoRezo."
         odoo_model = "res.company"

@@ -1,14 +1,13 @@
 import logging
 
 import graphene
-
-from .scalar import OdooList
-from .scalar import OdooType
+from odoo.addons.graphql_base.scalar import OdooList
+from odoo.addons.graphql_base.scalar import OdooListType
 
 _logger = logging.getLogger(__name__)
 
 
-class Invoice(OdooType):
+class Invoice(OdooListType):
     class Meta:
         description = "Invoice defined in ODOO from NeoRezo."
         odoo_model = "account.move"

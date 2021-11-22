@@ -3,7 +3,7 @@ import typing as t
 
 import graphene
 from graphene.types.objecttype import ObjectTypeOptions
-from odoo.addons.graphql_base import OdooObjectType
+from .types import OdooObjectType
 
 _logger = logging.getLogger(__name__)
 
@@ -24,7 +24,8 @@ class OdooOptions(ObjectTypeOptions):
         self.odoo_model = odoo_model
 
 
-class OdooType(OdooObjectType):
+class OdooListType(OdooObjectType):
+    """Oddo object type with Meta model extended."""
 
     @classmethod
     def __init_subclass_with_meta__(cls, **meta_options):
@@ -46,7 +47,7 @@ class OdooType(OdooObjectType):
 class OdooList(graphene.List):
     """A graphene List with an Odoo aware default resolver."""
 
-    def __init__(self, of_type: t.Type[OdooType], resolver=None, **kwargs):
+    def __init__(self, of_type: t.Type[OdooListType], resolver=None, **kwargs):
         resolver = resolver or self.record_resolver
         for field_name, field_type in of_type.fields().items():
             name = field_type.name or field_name
